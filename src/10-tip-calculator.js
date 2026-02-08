@@ -30,5 +30,19 @@
  * @returns {{ tipPercentage: number, tipAmount: number, totalAmount: number } | null}
  */
 export function calculateTip(billAmount, serviceRating) {
-  // Your code here
+  if (billAmount <= 0 || !Number.isInteger(serviceRating) || serviceRating < 1 || serviceRating > 5) {
+    return null;
+  }
+
+  // Array index corresponds to service rating
+  // Ex :- tipPercentages[1] = 5%, tipPercentages[5] = 25%
+  // This allows us to easily look up the tip percentage based on the service rating
+  // without using multiple if-else statements 
+  // parseFloat for rounding to 2 decimal places 
+  const tipPercentages = [0, 5, 10, 15, 20, 25];
+  const tipPercentage = tipPercentages[serviceRating];
+  const tipAmount = parseFloat((billAmount * (tipPercentage / 100)).toFixed(2));
+  const totalAmount = parseFloat((billAmount + tipAmount).toFixed(2));
+
+  return { tipPercentage, tipAmount, totalAmount };
 }

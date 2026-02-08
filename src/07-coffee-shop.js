@@ -31,5 +31,16 @@
  * @returns {number} Total price or -1 for invalid input
  */
 export function calculateCoffeePrice(size, type, extras = {}) {
-  // Your code here
+  const sizes = { small: 3.00, medium: 4.00, large: 5.00 };
+  const types = { regular: 0.00, latte: 1.00, cappuccino: 1.50, mocha: 2.00 };
+  
+  // Check for invalid size or type 
+  // size in sizes checks the object's key 
+  if(!(size in sizes) || !(type in types)) return -1;
+  
+  let total = sizes[size] + types[type];
+  if(extras.whippedCream) total += 0.50;
+  if(extras.extraShot) total += 0.75;
+  
+  return Math.round(total * 100) / 100;
 }
